@@ -4,8 +4,11 @@ import React from "react";
 import { Platform, StyleSheet } from "react-native";
 
 import { HapticTab } from "@/components/haptic-tab";
+import { TabBarProvider, useTabBar } from "@/contexts/TabBarContext";
 
-export default function TabLayout() {
+function TabLayoutInner() {
+  const { isTabBarVisible } = useTabBar();
+
   return (
     <Tabs
       screenOptions={{
@@ -13,7 +16,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: "#94a3b8",
         headerShown: false,
         tabBarButton: HapticTab,
-        tabBarStyle: styles.tabBar,
+        tabBarStyle: isTabBarVisible ? styles.tabBar : { display: "none" },
         tabBarLabelStyle: styles.tabBarLabel,
       }}
     >
@@ -76,6 +79,14 @@ export default function TabLayout() {
         }}
       />
     </Tabs>
+  );
+}
+
+export default function TabLayout() {
+  return (
+    <TabBarProvider>
+      <TabLayoutInner />
+    </TabBarProvider>
   );
 }
 
