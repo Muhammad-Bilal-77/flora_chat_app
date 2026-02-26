@@ -37,14 +37,6 @@ export default function SplashScreen({ onFinish }: Props) {
   const leafRightOpacity = useSharedValue(0);
   const leafLeftOpacity = useSharedValue(0);
 
-  // ── Scale for "growing" effect ──
-  const trunkScale = useSharedValue(0);
-  const branchRightScale = useSharedValue(0);
-  const branchLeftScale = useSharedValue(0);
-  const leafTopScale = useSharedValue(0.3);
-  const leafRightScale = useSharedValue(0.3);
-  const leafLeftScale = useSharedValue(0.3);
-
   // ── UI ──
   const glowOpacity = useSharedValue(0.5);
   const dot1Y = useSharedValue(0);
@@ -63,152 +55,132 @@ export default function SplashScreen({ onFinish }: Props) {
     hideSplash();
 
     const ease = Easing.out(Easing.cubic);
-    const growEase = Easing.out(Easing.back(1.5));
 
-    // ① Ground arc fades in
-    groundOpacity.value = withTiming(0.8, { duration: 400, easing: ease });
+    // Small delay to ensure component is mounted on Android
+    const startAnimations = () => {
+      // ① Ground arc fades in
+      groundOpacity.value = withTiming(0.8, { duration: 400, easing: ease });
 
-    // ② Trunk grows up (opacity + scaleY)
-    trunkOpacity.value = withDelay(
-      200,
-      withTiming(1, { duration: 600, easing: ease }),
-    );
-    trunkScale.value = withDelay(
-      200,
-      withTiming(1, { duration: 800, easing: growEase }),
-    );
+      // ② Trunk fades in
+      trunkOpacity.value = withDelay(
+        200,
+        withTiming(1, { duration: 600, easing: ease }),
+      );
 
-    // ③ Branches grow outward
-    branchRightOpacity.value = withDelay(
-      700,
-      withTiming(1, { duration: 400, easing: ease }),
-    );
-    branchRightScale.value = withDelay(
-      700,
-      withTiming(1, { duration: 500, easing: growEase }),
-    );
+      // ③ Branches fade in
+      branchRightOpacity.value = withDelay(
+        600,
+        withTiming(1, { duration: 400, easing: ease }),
+      );
 
-    branchLeftOpacity.value = withDelay(
-      850,
-      withTiming(1, { duration: 400, easing: ease }),
-    );
-    branchLeftScale.value = withDelay(
-      850,
-      withTiming(1, { duration: 500, easing: growEase }),
-    );
+      branchLeftOpacity.value = withDelay(
+        750,
+        withTiming(1, { duration: 400, easing: ease }),
+      );
 
-    // ④ Leaves bloom from branch tips
-    leafTopOpacity.value = withDelay(
-      1200,
-      withTiming(1, { duration: 420, easing: ease }),
-    );
-    leafTopScale.value = withDelay(
-      1200,
-      withTiming(1, { duration: 500, easing: growEase }),
-    );
+      // ④ Leaves fade in
+      leafTopOpacity.value = withDelay(
+        1000,
+        withTiming(1, { duration: 420, easing: ease }),
+      );
 
-    leafRightOpacity.value = withDelay(
-      1400,
-      withTiming(1, { duration: 420, easing: ease }),
-    );
-    leafRightScale.value = withDelay(
-      1400,
-      withTiming(1, { duration: 500, easing: growEase }),
-    );
+      leafRightOpacity.value = withDelay(
+        1150,
+        withTiming(1, { duration: 420, easing: ease }),
+      );
 
-    leafLeftOpacity.value = withDelay(
-      1600,
-      withTiming(1, { duration: 420, easing: ease }),
-    );
-    leafLeftScale.value = withDelay(
-      1600,
-      withTiming(1, { duration: 500, easing: growEase }),
-    );
+      leafLeftOpacity.value = withDelay(
+        1300,
+        withTiming(1, { duration: 420, easing: ease }),
+      );
 
-    // ⑤ Title fades up
-    titleOpacity.value = withDelay(
-      1500,
-      withTiming(1, { duration: 700, easing: ease }),
-    );
-    titleY.value = withDelay(
-      1500,
-      withTiming(0, { duration: 700, easing: ease }),
-    );
+      // ⑤ Title fades up
+      titleOpacity.value = withDelay(
+        1400,
+        withTiming(1, { duration: 700, easing: ease }),
+      );
+      titleY.value = withDelay(
+        1400,
+        withTiming(0, { duration: 700, easing: ease }),
+      );
 
-    // ⑥ Glow pulse
-    glowOpacity.value = withRepeat(
-      withSequence(
-        withTiming(1, { duration: 1200 }),
-        withTiming(0.5, { duration: 1200 }),
-      ),
-      -1,
-    );
-
-    // ⑦ Floating dots
-    dot1Y.value = withDelay(
-      100,
-      withRepeat(
+      // ⑥ Glow pulse
+      glowOpacity.value = withRepeat(
         withSequence(
-          withTiming(-7, { duration: 600 }),
-          withTiming(0, { duration: 600 }),
+          withTiming(1, { duration: 1200 }),
+          withTiming(0.5, { duration: 1200 }),
         ),
         -1,
-      ),
-    );
-    dot2Y.value = withDelay(
-      700,
-      withRepeat(
-        withSequence(
-          withTiming(-7, { duration: 600 }),
-          withTiming(0, { duration: 600 }),
+      );
+
+      // ⑦ Floating dots
+      dot1Y.value = withDelay(
+        100,
+        withRepeat(
+          withSequence(
+            withTiming(-7, { duration: 600 }),
+            withTiming(0, { duration: 600 }),
+          ),
+          -1,
         ),
-        -1,
-      ),
+      );
+      dot2Y.value = withDelay(
+        700,
+        withRepeat(
+          withSequence(
+            withTiming(-7, { duration: 600 }),
+            withTiming(0, { duration: 600 }),
+          ),
+          -1,
+        ),
+      );
+    };
+
+    // Start animations after a tiny delay on Android to ensure mount is complete
+    const timer = setTimeout(
+      startAnimations,
+      Platform.OS === "android" ? 50 : 0,
     );
 
     // ⑧ Auto-dismiss
     if (onFinish) {
       const t = setTimeout(onFinish, 3500);
-      return () => clearTimeout(t);
+      return () => {
+        clearTimeout(t);
+        clearTimeout(timer);
+      };
     }
+
+    return () => clearTimeout(timer);
   }, []);
 
-  // ── Animated styles (using transform works reliably on Android) ──
+  // ── Animated styles (opacity-only for Android compatibility) ──
   const groundStyle = useAnimatedStyle(() => ({
     opacity: groundOpacity.value,
   }));
 
   const trunkStyle = useAnimatedStyle(() => ({
     opacity: trunkOpacity.value,
-    transform: [
-      { scaleY: trunkScale.value },
-      { translateY: (1 - trunkScale.value) * 40 }, // Grow from bottom
-    ],
   }));
 
   const branchRightStyle = useAnimatedStyle(() => ({
     opacity: branchRightOpacity.value,
-    transform: [{ scale: branchRightScale.value }],
   }));
 
   const branchLeftStyle = useAnimatedStyle(() => ({
     opacity: branchLeftOpacity.value,
-    transform: [{ scale: branchLeftScale.value }],
   }));
 
   const leafTopStyle = useAnimatedStyle(() => ({
     opacity: leafTopOpacity.value,
-    transform: [{ scale: leafTopScale.value }],
   }));
 
   const leafRightStyle = useAnimatedStyle(() => ({
     opacity: leafRightOpacity.value,
-    transform: [{ scale: leafRightScale.value }],
   }));
 
   const leafLeftStyle = useAnimatedStyle(() => ({
     opacity: leafLeftOpacity.value,
-    transform: [{ scale: leafLeftScale.value }],
   }));
 
   const glowStyle = useAnimatedStyle(() => ({ opacity: glowOpacity.value }));

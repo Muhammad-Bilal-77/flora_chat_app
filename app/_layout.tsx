@@ -8,6 +8,7 @@ import { StatusBar } from "expo-status-bar";
 import { useState } from "react";
 import "react-native-reanimated";
 
+import AuthScreen from "@/components/AuthScreen";
 import OnboardingScreen from "@/components/OnboardingScreen";
 import SplashScreen from "@/components/SplashScreen";
 import { useColorScheme } from "@/hooks/use-color-scheme";
@@ -20,6 +21,7 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
   const [showSplash, setShowSplash] = useState(true);
   const [showOnboarding, setShowOnboarding] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   if (showSplash) {
     return (
@@ -35,6 +37,15 @@ export default function RootLayout() {
       <>
         <StatusBar style="dark" />
         <OnboardingScreen onFinish={() => setShowOnboarding(false)} />
+      </>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <>
+        <StatusBar style="dark" />
+        <AuthScreen onAuthSuccess={() => setIsAuthenticated(true)} />
       </>
     );
   }
