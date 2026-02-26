@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Flora Chat Splash Screen</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#47eb99",
+                        "leaf-light": "#86efac",
+                        "leaf-dark": "#22c55e",
+                        "wood": "#a67c52",
+                        "background-light": "#fdf2f8",
+                        "background-dark": "#112119",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'grow-trunk': 'growTrunk 2s ease-out forwards',
+                        'bloom': 'bloom 1s ease-out 1.5s forwards',
+                    },
+                    keyframes: {
+                        growTrunk: {
+                            '0%': { transform: 'scaleY(0)', opacity: '0' },
+                            '100%': { transform: 'scaleY(1)', opacity: '1' },
+                        },
+                        bloom: {
+                            '0%': { transform: 'scale(0)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        }
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+
+        .tree-stem {
+            transform-origin: bottom center;
+            animation: grow-stem 1.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        .tree-leaf-1 {
+            animation: leaf-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.8s forwards;
+            opacity: 0;
+            transform-origin: center;
+        }
+
+        .tree-leaf-2 {
+            animation: leaf-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.0s forwards;
+            opacity: 0;
+            transform-origin: center;
+        }
+
+        .tree-leaf-3 {
+            animation: leaf-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 1.2s forwards;
+            opacity: 0;
+            transform-origin: center;
+        }
+
+        @keyframes grow-stem {
+            from {
+                transform: scaleY(0);
+            }
+
+            to {
+                transform: scaleY(1);
+            }
+        }
+
+        @keyframes leaf-pop {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display h-screen w-full flex flex-col items-center justify-between overflow-hidden relative">
+    <div
+        class="absolute inset-0 z-0 bg-gradient-to-b from-pink-100 via-purple-100 to-indigo-100 dark:from-[#2e1d21] dark:to-[#1a1526] opacity-90 pointer-events-none">
+    </div>
+    <div class="relative z-10 flex flex-col flex-grow w-full items-center justify-center p-8">
+        <div class="relative flex items-center justify-center mb-10 w-64 h-64">
+            <div class="absolute w-48 h-48 bg-white/60 dark:bg-white/5 rounded-full blur-3xl animate-pulse"></div>
+            <svg class="w-48 h-48 drop-shadow-xl" fill="none" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <path class="opacity-80" d="M70 160 C70 160 80 170 100 170 C120 170 130 160 130 160" stroke="#A67C52"
+                    stroke-linecap="round" stroke-width="3"></path>
+                <g class="tree-stem">
+                    <path d="M100 160V80" stroke="#8B5E3C" stroke-linecap="round" stroke-width="4"></path>
+                    <path d="M100 130C100 130 115 115 125 105" stroke="#8B5E3C" stroke-linecap="round" stroke-width="3">
+                    </path>
+                    <path d="M100 110C100 110 80 95 70 85" stroke="#8B5E3C" stroke-linecap="round" stroke-width="3">
+                    </path>
+                </g>
+                <g>
+                    <path class="tree-leaf-3" d="M100 80 C100 80 80 60 100 40 C120 60 100 80 100 80Z" fill="#4ade80">
+                    </path>
+                    <path class="tree-leaf-3" d="M100 80 L100 60" opacity="0.5" stroke="#15803d" stroke-linecap="round"
+                        stroke-width="1"></path>
+                    <g class="tree-leaf-2">
+                        <path d="M125 105 C125 105 145 95 150 75 C125 80 125 105 125 105Z" fill="#86efac"></path>
+                        <path d="M125 105 C125 105 130 90 140 80" opacity="0.3" stroke="#16a34a" stroke-linecap="round"
+                            stroke-width="1"></path>
+                    </g>
+                    <g class="tree-leaf-1">
+                        <path d="M70 85 C70 85 50 75 45 55 C70 60 70 85 70 85Z" fill="#22c55e"></path>
+                        <path d="M70 85 C70 85 65 70 55 60" opacity="0.3" stroke="#14532d" stroke-linecap="round"
+                            stroke-width="1"></path>
+                    </g>
+                </g>
+            </svg>
+            <div class="absolute top-10 right-10 w-2 h-2 rounded-full bg-yellow-200/80 animate-bounce delay-100"></div>
+            <div class="absolute bottom-20 left-10 w-1.5 h-1.5 rounded-full bg-green-200/80 animate-bounce delay-700">
+            </div>
+        </div>
+        <h1
+            class="text-slate-800 dark:text-slate-100 text-[2.5rem] font-bold tracking-tight text-center leading-tight drop-shadow-sm">
+            Flora Chat
+        </h1>
+        <p class="text-slate-500 dark:text-slate-400 text-sm font-medium mt-3 tracking-widest uppercase opacity-70">
+            Growing Connections
+        </p>
+    </div>
+    <div class="relative z-10 w-full flex flex-col items-center pb-16 gap-6">
+        <div class="w-8 h-8 relative">
+            <div class="w-8 h-8 rounded-full border-2 border-slate-200 dark:border-slate-700"></div>
+            <div
+                class="w-8 h-8 rounded-full border-2 border-t-primary border-r-transparent border-b-transparent border-l-transparent absolute top-0 left-0 animate-spin">
+            </div>
+        </div>
+        <div class="text-[10px] text-slate-400 dark:text-slate-600 font-semibold tracking-wider">
+            V 2.5.0
+        </div>
+    </div>
+
+</body>
+
+</html>
